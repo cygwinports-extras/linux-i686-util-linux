@@ -1,0 +1,28 @@
+CROSS_HOST="i686-pc-linux-gnu"
+inherit cross
+
+NAME="linux-i686-util-linux"
+VERSION=2.22.1
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="util-linux libraries for Linux i686 toolchain"
+
+HOMEPAGE="http://kernel.org/~kzak/util-linux/"
+SRC_URI="http://www.kernel.org/pub/linux/utils/util-linux/v${VERSION%.?}/util-linux-${VERSION}.tar.xz"
+SRC_DIR="util-linux-${VERSION}"
+
+PKG_NAMES="linux-i686-libblkid linux-i686-libmount linux-i686-libuuid"
+linux_i686_libblkid_SUMMARY="libblkid for Linux i686 toolchain"
+linux_i686_libblkid_DOCS="libblkid/COPYING"
+linux_i686_libblkid_CONTENTS="${CROSS_PREFIX#/}/*/*blkid* ${CROSS_LIBDIR#/}/pkgconfig/blkid.pc"
+linux_i686_libmount_SUMMARY="libmount for Linux i686 toolchain"
+linux_i686_libmount_DOCS="libmount/COPYING"
+linux_i686_libmount_CONTENTS="${CROSS_PREFIX#/}/*/*mount* ${CROSS_LIBDIR#/}/pkgconfig/mount.pc"
+linux_i686_libuuid_SUMMARY="libuuid for Linux i686 toolchain"
+linux_i686_libuuid_DOCS="libuuid/COPYING"
+linux_i686_libuuid_CONTENTS="${CROSS_PREFIX#/}/*/*uuid* ${CROSS_LIBDIR#/}/pkgconfig/uuid.pc"
+
+# login, su: require pam, we're just building libraries
+CYGCONF_ARGS="--disable-login --disable-mount --disable-su --disable-wall --disable-nls --without-ncurses"
+MAKEOPTS+=" usrbin_exec_PROGRAMS= usrsbin_exec_PROGRAMS= bin_PROGRAMS= sbin_PROGRAMS= "
+MAKEOPTS+=" man_MANS= dist_man_MANS= dist_getoptexample_SCRIPTS= SETARCH_LINKS= "
